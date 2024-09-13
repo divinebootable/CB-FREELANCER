@@ -6,7 +6,7 @@
   color: white;
 
   .container {
-    width: 100%;
+    width: 90%;
     max-width: 1400px;
     display: flex;
     align-items: center;
@@ -68,6 +68,9 @@
             background-color: #333; /* Optional: Darker shade on hover */
           }
         }
+        .s-button{
+          display: none;
+        }
       }
 
       .popular {
@@ -120,6 +123,7 @@
         .search {
           flex-direction: column;
           align-items: stretch;
+          width: 80%;
 
           .searchInput {
             justify-content: center;
@@ -156,10 +160,11 @@
         }
 
         .search {
+          position: relative;
+          padding: .8em 0;
           .searchInput {
             img {
-              width: 16px;
-              height: 16px;
+              display: none;
             }
 
             input {
@@ -168,8 +173,18 @@
           }
 
           button {
-            height: 40px;
-            font-size: 14px;
+            display: none;
+          }
+          .s-button{
+            display: flex;
+            position: absolute;
+            right: .5em;
+            top: .3em;
+            width: 1em;
+            height: 1em;
+            background-color: #FF7AAC;
+            padding: .5em;
+            border-radius: 25px;
           }
         }
 

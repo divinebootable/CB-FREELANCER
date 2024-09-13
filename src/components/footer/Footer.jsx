@@ -21,23 +21,6 @@ function Footer() {
             <span>Sitemap</span>
           </div>
           <div className="item">
-            <h2>About</h2>
-            <span>Press & News</span>
-            <span>Partnerships</span>
-            <span>Privacy Policy</span>
-            <span>Terms of Service</span>
-            <span>Intellectual Property Claims</span>
-            <span>Investor Relations</span>
-            <span>Contact Sales</span>
-          </div>
-          <div className="item">
-            <h2>Support</h2>
-            <span>Help & Support</span>
-            <span>Trust & Safety</span>
-            <span>Selling on Fiverr</span>
-            <span>Buying on Fiverr</span>
-          </div>
-          <div className="item">
             <h2>Community</h2>
             <span>Customer Success Stories</span>
             <span>Community hub</span>
@@ -63,6 +46,23 @@ function Footer() {
             <span>Fiverr Workspace</span>
             <span>Learn</span>
             <span>Working Not Working</span>
+          </div>
+          <div className="item">
+            <h2>About</h2>
+            <span>Press & News</span>
+            <span>Partnerships</span>
+            <span>Privacy Policy</span>
+            <span>Terms of Service</span>
+            <span>Intellectual Property Claims</span>
+            <span>Investor Relations</span>
+            <span>Contact Sales</span>
+          </div>
+          <div className="item">
+            <h2>Support</h2>
+            <span>Help & Support</span>
+            <span>Trust & Safety</span>
+            <span>Selling on Fiverr</span>
+            <span>Buying on Fiverr</span>
           </div>
         </div>
         <hr />

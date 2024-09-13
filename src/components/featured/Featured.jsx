@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Featured.scss";
 import { useNavigate } from "react-router-dom";
+import { BiSearch } from "react-icons/bi";
 
 function Featured() {
   const [input, setInput] = useState("");
@@ -21,10 +22,13 @@ function Featured() {
               <img src="./img/search.png" alt="" />
               <input
                 type="text"
-                placeholder='Try "building mobil app"'
+                placeholder='Try "building mobile app"'
                 onChange={(e) => setInput(e.target.value)}
               />
             </div>
+            <span className="s-button" onClick={handleSubmit}>
+              <BiSearch color="white" />
+            </span>
             <button className="buttonSearch" onClick={handleSubmit}>
               Search
             </button>

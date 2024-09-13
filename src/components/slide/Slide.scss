@@ -4,12 +4,23 @@
   padding: 100px 0px;
   
   .container {
-    width: 1400px;
+    width: 90%;
+    height: 370px;
+    max-width: 1400px;
     position: relative;
   }
 
   .carousel-initialized {
-    position: static;
+    display: flex;
+    .carousel-track{
+      height: 370px!important;
+      .carousel-item{
+        height: 100%;
+        .carousel-row{
+          height: 100%;
+        }
+      }
+    }
   }
 
   .carousel-prev,
@@ -25,6 +36,23 @@
   }
 
   .carousel-prev {
-    left: -25px;
+    // left: -25px;
   }
+  @media (width<768px) {
+    .carousel-item{
+      position: unset;
+      .carousel-row{
+        height: 100%;
+        width: max-content;
+        .catCard{
+          image{
+              height: 100%!important;
+          } 
+        }
+      }
+    }
+    
+  }
+  
+
 }

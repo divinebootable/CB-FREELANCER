@@ -10,7 +10,8 @@
   }
 
   .container {
-    width: 1400px;
+    width: 90%;
+    max-width: 1400px;
     .top {
       display: flex;
       justify-content: space-between;
@@ -64,6 +65,27 @@
           display: flex;
           align-items: center;
           gap: 10px;
+        }
+      }
+    }
+  }
+  @media (width<=768px) {
+    .container{
+      .top{
+        flex-wrap: wrap;
+        row-gap: 1em;
+        .item{
+          width: 40%;
+        }
+      }
+      .bottom{
+        flex-wrap: wrap; 
+        justify-content: center;
+        row-gap: 1em;
+        .right{
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 15px;
         }
       }
     }
