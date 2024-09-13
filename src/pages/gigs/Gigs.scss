@@ -4,7 +4,8 @@
   justify-content: center;
 
   .container {
-    width: 1400px;
+    width: 90%;
+    max-width: 1400px;
     padding: 30px 0px;
     display: flex;
     flex-direction: column;
@@ -29,26 +30,30 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
       margin-bottom: 20px;
 
       .left {
         display: flex;
-        align-items: center;
+        align-items: start;
         gap: 10px;
         color: #555;
         font-weight: 300;
-
-        input{
-          padding: 5px;
-          border: 1px solid lightgrey;
-          border-radius: 5px;
-          outline: none;
-
-          &::placeholder{
-            color: #999;
+        flex-wrap: wrap;
+        div{
+          input{
+            padding: 5px;
+            border: 1px solid lightgrey;
+            border-radius: 5px;
+            outline: none;
+  
+            &::placeholder{
+              color: #999;
+            }
           }
+  
         }
-
+        
         button{
           padding: 5px 10px;
           background-color: #1dbf73;
@@ -106,6 +111,19 @@
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
+    }
+  }
+  @media (width<768px) {
+    .menu{
+      .left{
+        margin-bottom: 1em;
+        div{
+          width: 50%;
+          display: flex;
+          flex-direction: column;
+          row-gap: .5em;
+        }
+      }
     }
   }
 }

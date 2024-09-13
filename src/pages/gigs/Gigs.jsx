@@ -53,8 +53,10 @@ function Gigs() {
         <div className="menu">
           <div className="left">
             <span>Budget</span>
-            <input ref={minRef} type="number" placeholder="min" />
-            <input ref={maxRef} type="number" placeholder="max" />
+            <div>
+              <input ref={minRef} type="number" placeholder="min" />
+              <input ref={maxRef} type="number" placeholder="max" />
+            </div>
             <button onClick={apply}>Apply</button>
           </div>
           <div className="right">
