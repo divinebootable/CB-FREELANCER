@@ -133,7 +133,7 @@
   }
 
   .menu {
-    width: 100%;
+    width: 90%;
     max-width: 1400px;
     padding: 10px 0;
     display: flex;
@@ -141,6 +141,10 @@
     color: gray;
     font-weight: 300;
     font-family: "Montserrat", sans-serif;
+    .link{
+      text-align: center;
+      text-wrap: balance;
+    }
   }
 
   @media screen and (max-width: 768px) {
