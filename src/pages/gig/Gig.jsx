@@ -42,7 +42,7 @@ function Gig() {
         <div className="container">
           <div className="left">
             <span className="breadcrumbs">
-              Fiverr {">"} Graphics & Design {">"}
+              CB. {">"} Graphics & Design {">"}
             </span>
             <h1>{data.title}</h1>
             {isLoadingUser ? (
@@ -51,22 +51,28 @@ function Gig() {
               "Something went wrong!"
             ) : (
               <div className="user">
-                <img
-                  className="pp"
-                  src={dataUser.img || "/img/noavatar.jpg"}
-                  alt=""
-                />
-                <span>{dataUser.username}</span>
-                {!isNaN(data.totalStars / data.starNumber) && (
-                  <div className="stars">
-                    {Array(Math.round(data.totalStars / data.starNumber))
-                      .fill()
-                      .map((item, i) => (
-                        <img src="/img/star.png" alt="" key={i} />
-                      ))}
-                    <span>{Math.round(data.totalStars / data.starNumber)}</span>
+                <div className="user-info">
+                  <img
+                    className="pp"
+                    src={dataUser.img || "/img/noavatar.jpg"}
+                    alt=""
+                  />
+                  <div className="name-stars">
+                    <span>{dataUser.username}</span>
+                    {!isNaN(data.totalStars / data.starNumber) && (
+                      <div className="stars">
+                        {Array(Math.round(data.totalStars / data.starNumber))
+                          .fill()
+                          .map((item, i) => (
+                            <img src="/img/star.png" alt="" key={i} />
+                          ))}
+                        <span>
+                          {Math.round(data.totalStars / data.starNumber)}
+                        </span>
+                      </div>
+                    )}
                   </div>
-                )}
+                </div>
               </div>
             )}
             <Slider slidesToShow={1} arrowsScroll={1} className="slider">
@@ -99,7 +105,9 @@ function Gig() {
                         </span>
                       </div>
                     )}
-                    <button>Contact Me</button>
+                    <button className="contact-seller-button">
+                      Contact Me
+                    </button>
                   </div>
                 </div>
                 <div className="box">
@@ -157,7 +165,7 @@ function Gig() {
               ))}
             </div>
             <Link to={`/pay/${id}`}>
-            <button>Continue</button>
+              <button>Continue</button>
             </Link>
           </div>
         </div>

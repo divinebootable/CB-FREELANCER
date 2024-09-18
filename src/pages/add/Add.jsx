@@ -1,18 +1,21 @@
-import React, { useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import "./Add.scss";
 import { gigReducer, INITIAL_STATE } from "../../reducers/gigReducer";
 import upload from "../../utils/upload";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
 import { useNavigate } from "react-router-dom";
+import { BiLoader } from "react-icons/bi";
 
 const Add = () => {
   const [singleFile, setSingleFile] = useState(undefined);
   const [files, setFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
-
+  const [coverImg, setCoverImg] = useState("");
+  const [uploadImgs, setUploadImgs] = useState([]);
   const [state, dispatch] = useReducer(gigReducer, INITIAL_STATE);
-
+  const [spinner, setSpinner] = useState(false);
+  const [errorResponseMessage, setErrorResponseMessage] = useState("");
   const handleChange = (e) => {
     dispatch({
       type: "CHANGE_INPUT",
@@ -52,19 +55,39 @@ const Add = () => {
 
   const mutation = useMutation({
     mutationFn: (gig) => {
-      return newRequest.post("/gigs", gig);
+      try {
+        let res = newRequest.post("/gigs", gig);
+        if (res.status === 200) {
+          console.log(res);
+          setSpinner(false);
+        }
+      } catch (error) {
+        let message = error.response.data;
+        let status = error.status;
+        if (status === 403) {
+          setErrorResponseMessage(message);
+          consosle.log(message);
+          return;
+        }
+        console.log(error);
+        setSpinner(false);
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["myGigs"]);
     },
+    onError: (error) => {
+      console.log(error);
+    },
   });
 
   const handleSubmit = (e) => {
+    setSpinner(true);
     e.preventDefault();
     mutation.mutate(state);
     // navigate("/mygigs")
   };
-
+  useEffect(() => {}, [uploadImgs]);
   return (
     <div className="add">
       <div className="container">
@@ -76,6 +99,7 @@ const Add = () => {
               type="text"
               name="title"
               placeholder="e.g. I will do something I'm really good at"
+              required
               onChange={handleChange}
             />
             <label htmlFor="">Category</label>
@@ -88,15 +112,35 @@ const Add = () => {
             <div className="images">
               <div className="imagesInputs">
                 <label htmlFor="">Cover Image</label>
+                <div className="selected-img">
+                  <img src={coverImg} />
+                </div>
                 <input
                   type="file"
-                  onChange={(e) => setSingleFile(e.target.files[0])}
+                  required
+                  onChange={(e) => {
+                    setSingleFile(e.target.files[0]);
+                    setCoverImg(URL.createObjectURL(e.target.files[0]));
+                  }}
                 />
                 <label htmlFor="">Upload Images</label>
+                {uploadImgs && uploadImgs.map((file) => {})}
+                <div className="selected-imgs">
+                  {uploadImgs && uploadImgs.map((file) => <img src={file} />)}
+                </div>
                 <input
                   type="file"
                   multiple
-                  onChange={(e) => setFiles(e.target.files)}
+                  onChange={(e) => {
+                    setFiles(e.target.files);
+                    let tempFiles = [...e.target.files];
+                    setUploadImgs([
+                      ...tempFiles.map((file) => {
+                        return URL.createObjectURL(file);
+                      }),
+                    ]);
+                    // setUploadImgs(e.target.files);
+                  }}
                 />
               </div>
               <button onClick={handleUpload}>
@@ -110,15 +154,16 @@ const Add = () => {
               placeholder="Brief descriptions to introduce your service to customers"
               cols="0"
               rows="16"
+              required
               onChange={handleChange}
             ></textarea>
-            <button onClick={handleSubmit}>Create</button>
           </div>
           <div className="details">
             <label htmlFor="">Service Title</label>
             <input
               type="text"
               name="shortTitle"
+              required
               placeholder="e.g. One-page web design"
               onChange={handleChange}
             />
@@ -130,6 +175,7 @@ const Add = () => {
               placeholder="Short description of your service"
               cols="30"
               rows="10"
+              required
             ></textarea>
             <label htmlFor="">Delivery Time (e.g. 3 days)</label>
             <input type="number" name="deliveryTime" onChange={handleChange} />
@@ -159,9 +205,19 @@ const Add = () => {
               ))}
             </div>
             <label htmlFor="">Price</label>
-            <input type="number" onChange={handleChange} name="price" />
+            <input
+              type="number"
+              onChange={handleChange}
+              required
+              placeholder="$750"
+              name="price"
+            />
           </div>
         </div>
+        <p className="error">{errorResponseMessage}</p>
+        <button onClick={handleSubmit} className="button">
+          Create {spinner && <BiLoader />}
+        </button>
       </div>
     </div>
   );

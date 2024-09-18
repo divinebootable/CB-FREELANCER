@@ -6,20 +6,42 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-
+    padding: 1em 2em;
+    box-shadow: 1px 1px 4px 4px;
+    border-radius: 8px;
     .addForm {
       display: flex;
       flex-direction: column;
       gap: 20px;
-
+      // position: relative;
       input {
         padding: 20px;
       }
-
-      select {
-        width: 200px;
-        padding: 20px;
+      .error{
+        margin: .2em 0;
+        color: red;
+      }
+      .success{
+        margin: .2em 0;
+        color: #1dbf73;
+      }
+      span{
         align-self: flex-end;
+      }
+      .select{
+        position: relative;
+        select {
+          width: 200px;
+          padding: 20px;
+          -webkit-appearance: none;
+          align-self: flex-end;
+          background-color: transparent;
+        }
+        .dropdown-caret{
+          position: absolute;
+          top: 30%;
+          right: 14px;
+        }
       }
       button {
         align-self: flex-end;
@@ -29,6 +51,7 @@
         color: white;
         background-color: #1dbf73;
         cursor: pointer;
+        border-radius: 5px;
       }
     }
   }
