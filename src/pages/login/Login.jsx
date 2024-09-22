@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import "./Login.scss";
 import newRequest from "../../utils/newRequest";
 import { useNavigate } from "react-router-dom";
@@ -13,12 +14,21 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await newRequest.post("/auth/login", { username, password });
+      const res = await newRequest.post("api/auth/login", {
+        username,
+        password,
+      });
       localStorage.setItem("currentUser", JSON.stringify(res.data));
+      toast.success("Registration successful!");
       navigate("/");
     } catch (err) {
-      console.log(err.response.data);
-      setError(err.response.data);
+      if (err.response && err.response.status === 404) {
+        // If the error is a 404, show a message indicating that credentials were not found
+        setError("Login credentials not found. Please create an account.");
+      } else {
+        // Other errors (such as server errors, network issues, etc.)
+        setError("An error occurred. Please try again.");
+      }
     }
   };
 
@@ -26,7 +36,7 @@ function Login() {
     <div className="login">
       <form onSubmit={handleSubmit}>
         <h1>Sign in</h1>
-        <label htmlFor="">Username</label>
+        <label htmlFor="username">Username</label>
         <input
           name="username"
           type="text"
@@ -34,14 +44,14 @@ function Login() {
           onChange={(e) => setUsername(e.target.value)}
         />
 
-        <label htmlFor="">Password</label>
+        <label htmlFor="password">Password</label>
         <input
           name="password"
           type="password"
           onChange={(e) => setPassword(e.target.value)}
         />
         <button type="submit">Login</button>
-        {error && error}
+        {error && <p className="error">{error}</p>}
       </form>
     </div>
   );

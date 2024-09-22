@@ -12,6 +12,20 @@ function Gigs() {
   const maxRef = useRef();
   const [gigs, setGigs] = useState([]);
   const { search } = useLocation();
+
+  const dummyData = [
+    {
+      _id: "1",
+      title: "Dummy Gig 1",
+      description: "This is a dummy gig description.",
+    },
+    {
+      _id: "2",
+      title: "Dummy Gig 2",
+      description: "This is another dummy gig description.",
+    },
+  ];
+
   const fetchAllGigs = async () => {
     try {
       let res = await newRequest.get("/gigs");
@@ -21,9 +35,10 @@ function Gigs() {
       }
     } catch (error) {
       console.log(error);
+      setGigs(dummyData); // Set dummy data when error occurs
     }
   };
-  // fetchAllGigs();
+
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["gigs"],
     queryFn: () =>
@@ -32,13 +47,13 @@ function Gigs() {
           `/gigs${search}&min=${minRef.current.value}&max=${maxRef.current.value}&sort=${sort}`
         )
         .then((res) => {
-          console.log("Yeah");
-          console.log(res.data);
           return res.data;
+        })
+        .catch((error) => {
+          console.log("Error fetching gigs: ", error);
+          return dummyData; // Return dummy data if the request fails
         }),
   });
-
-  // console.log(data);
 
   const reSort = (type) => {
     setSort(type);
@@ -48,20 +63,11 @@ function Gigs() {
   useEffect(() => {
     refetch();
   }, [sort]);
+
   useEffect(() => {
-    const fetchAllGigs = async () => {
-      try {
-        let res = await newRequest.get("/gigs");
-        if (res) {
-          console.log(res);
-          setGigs(res.data);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
     fetchAllGigs();
   }, []);
+
   const apply = () => {
     refetch();
   };
@@ -110,7 +116,7 @@ function Gigs() {
         </div>
         <div className="gig-card-container">
           {gigs.map((gig) => (
-            <GigCard item={gig}></GigCard>
+            <GigCard key={gig._id} item={gig}></GigCard>
           ))}
         </div>
       </div>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import upload from "../../utils/upload";
 import "./Register.scss";
 import newRequest from "../../utils/newRequest";
@@ -34,11 +35,12 @@ function Register() {
 
     const url = await upload(file);
     try {
-      await newRequest.post("/auth/register", {
+      await newRequest.post("/api/auth/register", {
         ...user,
         img: url,
       });
-      navigate("/")
+      toast.success("Registration successful!"); // Add this line
+      navigate("/");
     } catch (err) {
       console.log(err);
     }
